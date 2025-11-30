@@ -9,96 +9,61 @@
 
 [Extract from feature spec: primary requirement + technical approach from research]
 
-## Technical Context
-
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+This project requires explicit answers for the constitution gates below. Each item
+MUST be satisfied or have a documented, technical justification in this plan.
+
+- **Accessibility (MUST):** UI flows and screens MUST include accessibility
+  labels, focus order, and sufficient contrast or explain a compensating control.
+- **Offline & Sync (MUST/When Applicable):** If the feature interacts with
+  local state or background sync, document offline behavior, conflict resolution,
+  and storage limits.
+- **Privacy & Data Handling (MUST):** Any use of PII, telemetry, or persisted
+  user data MUST include purpose, retention, and consent handling.
+- **Testing & CI (MUST):** Unit tests for business logic and automated CI checks
+  for builds/tests MUST be defined; critical user journeys MUST have integration
+  or UI tests where appropriate.
+- **Errors & Observability (SHOULD):** Error reporting and minimal telemetry
+  MUST avoid PII and include an opt-out plan; logging levels and retention MUST
+  be declared for the feature.
+- **Versioning & Migrations (MUST):** Any data model, storage, or API changes
+  MUST include a migration plan and a semantic-versioning impact statement.
+
+Answer these gates in the plan's "Constitution Check" section for validator review.
 
 ## Project Structure
 
 ### Documentation (this feature)
+## Technical Approach
 
-```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit.plan command output)
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
-```
+### Architecture
+- Pattern: MVVM (per constitution)
+- Navigation: Shell routing
+- State Management: CommunityToolkit.Mvvm
 
-### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
+### Implementation Strategy
+1. **Data Layer**
+   - Create model: `{{Model}}.cs`
+   - Create service interface: `I{{Service}}.cs`
+   - Implement service: `{{Service}}.cs`
+   
+2. **ViewModel Layer**
+   - Create ViewModel: `{{ViewModel}}.cs`
+   - Implement commands using RelayCommand
+   - Add validation logic
+   - Handle error states
 
-```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+3. **View Layer**
+   - Create XAML: `{{Page}}.xaml`
+   - Implement data bindings
+   - Add platform-specific renderers if needed
 
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
-```
-
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
-
-## Complexity Tracking
-
-> **Fill ONLY if Constitution Check has violations that must be justified**
-
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+### Constitution Compliance
+- ✓ Using MVVM (required)
+- ✓ Async/await for all I/O
+- ✓ Input validation
+- ✓ Secure storage for credentials
