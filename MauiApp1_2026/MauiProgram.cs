@@ -53,6 +53,9 @@ namespace MauiApp1_2026
             builder.Services.AddSingleton<ProjectListPageModel>();
             builder.Services.AddSingleton<ManageMetaPageModel>();
 
+            // Feedback page registration
+            builder.Services.AddTransientWithShellRoute<Pages.FeedbackPage, PageModels.FeedbackPageModel>("feedback");
+
             builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
             builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
 

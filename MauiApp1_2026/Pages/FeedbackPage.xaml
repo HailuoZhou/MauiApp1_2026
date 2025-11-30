@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:MauiApp1_2026.PageModels"
+             x:Class="MauiApp1_2026.Pages.FeedbackPage"
+             x:DataType="pageModels:FeedbackPageModel"
+             Title="Feedback">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Label Text="Send Feedback" FontSize="22" />
+
+            <Label Text="Title" />
+            <Entry Text="{Binding Title}" Placeholder="Short summary" />
+
+            <Label Text="Content" />
+            <Editor Text="{Binding Content}" HeightRequest="200" Placeholder="What would you like to tell us?" />
+
+            <Button Text="Send" Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
